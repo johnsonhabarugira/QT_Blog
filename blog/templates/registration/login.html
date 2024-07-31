@@ -2,20 +2,26 @@
 
 
 {% block content %}
-  <div class="jumbotron">
+  <form method="POST" action="{% url 'login' %}">
+    <h1 class="h3 mb-3 fw-normal">Log in</h1>
+    <p>Welcome Back! Please Enter Your Details</p>
 
-    <h2>Please Login: </h2>
-    <h3>(Must be SuperUser, please check admin for issues.)</h3>
-    {% if form.errors %}
-        <p>Your username and password didn't match.Please try again!</p>
-    {% endif %}
+    <div class="form-floating">
+      {% if form.errors %}
+          <p>Your username and password didn't match.Please try again! </b>Hint:Use Superuser Credentials!</p>
+      {% endif %}
+  
+      <form method="POST" action="{% url 'login' %}">
+      {% csrf_token %}
+          {{form.as_p}}
+    </div>
 
-    <form method="POST" action="{% url 'login' %}">
-    {% csrf_token %}
-        {{form.as_p}}
+    <div class="checkbox mb-3">
+    </div>
+  
+  <input type="submit" class='btn btn-primary' value="Login" />
+  <input type="hidden" name="next" value="{{ next }}" />
+  </form>
 
-        <input type="submit" class='btn btn-primary' value="Login" />
-        <input type="hidden" name="next" value="{{ next }}" />
-    </form>
-  </div>
+</main>
 {% endblock %}
